@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.llglh.wavesense.R
 
-class TodoListFragment : Fragment() {
+class MonitorFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

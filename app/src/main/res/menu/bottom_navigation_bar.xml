@@ -3,13 +3,13 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/home"
-        android:title="首页" />
+        android:title="实时监测" />
     <item
         android:id="@+id/news"
         android:icon="@drawable/news"
-        android:title="其他" />
+        android:title="异常报警/历史记录" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/personal"
-        android:title="我的" />
+        android:title="个人中心" />
 </menu>

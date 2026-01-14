@@ -7,11 +7,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.llglh.wavesense.R
-import com.llglh.wavesense.app.ui.fragment.NewsFragment
+import com.llglh.wavesense.app.ui.fragment.HistoryFragment
 import com.llglh.wavesense.app.ui.fragment.ProfileFragment
-import com.llglh.wavesense.app.ui.fragment.TodoListFragment
+import com.llglh.wavesense.app.ui.fragment.MonitorFragment
 import com.llglh.wavesense.databinding.ActivityMainBinding
-import es.dmoral.toasty.Toasty
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -22,8 +21,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         fragmentlist = listOf(
-            TodoListFragment(),
-            NewsFragment(),
+            MonitorFragment(),
+            HistoryFragment(),
             ProfileFragment()
         )
 
