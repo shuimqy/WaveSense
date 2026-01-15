@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.llglh.wavesense.databinding.FragmentNewsBinding
+import com.llglh.wavesense.databinding.FragmentHistoryBinding
 
 class HistoryFragment:Fragment (){
-    private lateinit var binding: FragmentNewsBinding
+    private lateinit var binding: FragmentHistoryBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNewsBinding.inflate(inflater,container,false)
+        binding = FragmentHistoryBinding.inflate(inflater,container,false)
         return binding.root
     }
 }

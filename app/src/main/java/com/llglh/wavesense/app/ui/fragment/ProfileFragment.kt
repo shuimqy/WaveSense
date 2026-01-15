@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.llglh.wavesense.R
-import com.llglh.wavesense.databinding.FragmentNewsBinding
 import com.llglh.wavesense.databinding.FragmentProfileBinding
 
 class ProfileFragment:Fragment (){
