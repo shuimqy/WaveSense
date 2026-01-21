@@ -1,96 +1,115 @@
 package com.llglh.wavesense.app.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doAfterTextChanged
-import com.llglh.wavesense.R
-import com.llglh.wavesense.app.db.DataBaseHelper
 import com.llglh.wavesense.databinding.ActivityRegisterBinding
+import com.llglh.wavesense.app.network.LoginResponse
+import com.llglh.wavesense.app.network.RegisterRequest
+import com.llglh.wavesense.app.network.RetrofitClient
 import es.dmoral.toasty.Toasty
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var dbHelper: DataBaseHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityRegisterBinding.inflate(layoutInflater)
-        dbHelper = DataBaseHelper(this)
         setContentView(binding.root)
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
+
         setupListener()
+    }
+
+    private fun setupListener() {
+        // 1. 输入框监听：输入时自动清除错误提示
+        binding.usernameInput.doAfterTextChanged {
+            if (!it.isNullOrEmpty()) binding.usernameLayout.error = null
+        }
+        binding.passwordInput.doAfterTextChanged {
+            if (!it.isNullOrEmpty()) binding.passwordLayout.error = null
+        }
+        // ✅ 修正：这里用 passwordAgainInput 对应你的XML
+        binding.passwordAgainInput.doAfterTextChanged {
+            if (!it.isNullOrEmpty()) binding.passwordAgainLayout.error = null
+        }
+
+        // 2. 注册按钮点击事件
         binding.registerBtn.setOnClickListener {
             register()
         }
-    }
 
-    //监听输入框,变化后更新错误信息
-    private fun setupListener() {
-        binding.usernameInput.doAfterTextChanged {
-            if(!it.isNullOrEmpty()&&binding.usernameLayout.error!=null){
-                binding.usernameLayout.error = null
-            }
-        }
-        binding.passwordInput.doAfterTextChanged {
-            if(!it.isNullOrEmpty()&&binding.passwordLayout.error!=null){
-                binding.passwordLayout.error = null
-            }
-        }
-        binding.passwordAgainInput.doAfterTextChanged {
-            if(!it.isNullOrEmpty()&&binding.passwordAgainLayout.error!=null){
-                binding.passwordAgainLayout.error = null
-            }
+        // 3. 返回登录页点击事件
+        binding.jumpLogin.setOnClickListener {
+            finish() // 关闭当前页面，自动返回上一页
         }
     }
-
 
     private fun register() {
-        //1.获取输入框的内容
-        val username = binding.usernameInput.text.toString()
-        val password = binding.passwordInput.text.toString()
-        val passwordConfirm = binding.passwordAgainInput.text.toString()
-        //2.判断输入框内容是否为空
-        when{
-            username.isEmpty() -> {
-                binding.usernameLayout.error = "用户名不能为空"
-        }
-            password.isEmpty() -> {
-                binding.passwordLayout.error = "密码不能为空"
-            }
-            passwordConfirm.isEmpty() -> {
-                binding.passwordAgainLayout.error = "请再次输入密码"
-            }
-            password != passwordConfirm -> {
-                binding.passwordAgainLayout.error = "两次输入的密码不一致"
-            }
-        }
-        //检测用户是否注册
-        if (dbHelper.checkUserExist(username)) {
-            Toasty.error(this, "用户已存在").show()
-            return
-        }
-        if (!dbHelper.registerUser(username, password)) {
-            Toasty.error(this, "注册失败").show()
-            return
-        }
-        Toasty.success(this, "注册成功").show()
-        //跳转页面
-        startActivity(Intent(this, LoginActivity::class.java))
-        finish()
+        val username = binding.usernameInput.text.toString().trim()
+        val password = binding.passwordInput.text.toString().trim()
+        // ✅ 修正：这里用 passwordAgainInput
+        val confirmPassword = binding.passwordAgainInput.text.toString().trim()
 
-        //密码在6-12位之间
-        if(password.length !in 6..12){
-            binding.passwordLayout.error = "密码长度必须在6-12位之间"
-            binding.passwordAgainLayout.error = "密码长度必须在6-12位之间"
+        // --- 步骤1：本地校验 ---
+
+        // 非空校验
+        if (username.isEmpty()) {
+            binding.usernameLayout.error = "用户名不能为空"
+            return
         }
+        if (password.isEmpty()) {
+            binding.passwordLayout.error = "密码不能为空"
+            return
+        }
+
+        // 长度校验
+        if (password.length < 6 || password.length > 12) {
+            binding.passwordLayout.error = "密码长度必须在6-12位之间"
+            return
+        }
+
+        // 确认密码校验
+        // ✅ 修正：这里用 passwordAgainLayout
+        if (password != confirmPassword) {
+            binding.passwordAgainLayout.error = "两次输入的密码不一致"
+            return
+        }
+
+        // --- 步骤2：发起云端注册请求 ---
+
+        Toasty.info(this, "正在提交注册...").show()
+
+        val request = RegisterRequest(
+            username = username,
+            password = password,
+            role = "family" // 默认角色
+        )
+
+        RetrofitClient.api.register(request).enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                val result = response.body()
+
+                if (response.isSuccessful && result != null && result.code == 200) {
+                    // 🎉 注册成功
+                    Toasty.success(this@RegisterActivity, "注册成功！请登录").show()
+                    finish()
+                } else {
+                    // 😭 注册失败
+                    val errorMsg = result?.msg ?: "注册失败"
+                    binding.usernameLayout.error = errorMsg
+                    Toasty.error(this@RegisterActivity, errorMsg).show()
+                }
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                t.printStackTrace()
+                Toasty.error(this@RegisterActivity, "连接服务器失败").show()
+            }
+        })
     }
 }
