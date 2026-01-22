@@ -5,4 +5,4 @@ ps aux | grep mock_device.py
 kill -9 pid
 
 后台运行进程
-nohup python3 /www/wwwroot/wavesense/mock_device.py
+nohup python3 /www/wwwroot/wavesense/mock_device.py > /www/wwwroot/wavesense/mock_device.log 2>&1 &
