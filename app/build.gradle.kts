@@ -57,4 +57,5 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     // OkHttp 日志拦截器 (方便看 Log)
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

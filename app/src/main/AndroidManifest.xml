@@ -17,14 +17,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".item_alarm"
+            android:exported="false" />
+        <activity
             android:name=".app.ui.activity.ChangePwdActivity"
             android:exported="false" />
         <activity
             android:name=".app.ui.activity.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".app.ui.activity.LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity android:name=".app.ui.activity.RegisterActivity" />
         <activity
             android:name=".app.ui.activity.SplashActivity"
