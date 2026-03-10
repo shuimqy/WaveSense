@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.llglh.wavesense.app.ui.activity.ChangePwdActivity
 import com.llglh.wavesense.databinding.FragmentProfileBinding
 import com.llglh.wavesense.app.ui.activity.LoginActivity
+import com.llglh.wavesense.app.ui.activity.SettingsActivity
 import es.dmoral.toasty.Toasty
 
 class ProfileFragment : Fragment() {
@@ -88,6 +89,10 @@ class ProfileFragment : Fragment() {
         binding.btnChangePwd.setOnClickListener {
             // 跳转到修改密码页
             startActivity(Intent(requireActivity(), ChangePwdActivity::class.java))
+        }
+        binding.btnAlarmPreference.setOnClickListener {
+            // 跳转到报警设置页
+            startActivity(Intent(requireActivity(), SettingsActivity::class.java))
         }
     }
 

@@ -25,4 +25,11 @@ interface ApiService {
     fun getLatestData(@Body request: Map<String, String>): Call<BaseListResponse<Map<String, String>>>
     // 注意：这里为了省事，我用了 Map<String, String> 来接数据。
     // 因为 Python 返回的是 {"bpm": "75", "breath": "18"}，用 Map 接正好。
+    // 👇 新增：获取设置
+    @POST("get_settings")
+    fun getSettings(@Body request: Map<String, String>): Call<SettingsResponse>
+
+    // 👇 新增：更新设置 (注意：这里用 Any 是因为值有 Int 也有 String)
+    @POST("update_settings")
+    fun updateSettings(@Body request: UpdateSettingsRequest): Call<SettingsResponse>
 }

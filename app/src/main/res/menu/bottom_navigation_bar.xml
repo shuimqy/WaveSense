@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
-        android:id="@+id/home"
+        android:id="@+id/navigation_monitor"
         android:icon="@drawable/home"
         android:title="实时监测" />
+
     <item
-        android:id="@+id/news"
+        android:id="@+id/navigation_history"
         android:icon="@drawable/news"
-        android:title="异常报警/历史记录" />
+        android:title="历史报警" />
+
     <item
-        android:id="@+id/profile"
+        android:id="@+id/navigation_profile"
         android:icon="@drawable/personal"
         android:title="个人中心" />
+
 </menu>

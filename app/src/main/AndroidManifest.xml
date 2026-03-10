@@ -4,7 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,7 +18,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".item_alarm"
+            android:name=".app.ui.activity.AlarmDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".app.ui.activity.SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".app.ui.activity.ChangePwdActivity"

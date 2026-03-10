@@ -84,6 +84,12 @@
             android:text="我的设备 (雷达/手环)" />
 
         <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEEEEE"/>
+        <TextView
+            android:id="@+id/btnAlarmPreference"
+            style="@style/ProfileMenuItem"
+            android:drawableStart="@android:drawable/ic_menu_preferences"
+            android:text="报警偏好设置" />
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEEEEE"/>
 
         <TextView
             android:id="@+id/btnChangePwd"
