@@ -134,7 +134,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkNewAlarms() {
-        val request = mapOf("user_id" to "1")
+        val userId = getSharedPreferences("user_info", MODE_PRIVATE)
+            .getInt("user_id", 1)
+        val request = mapOf("user_id" to userId.toString())
         RetrofitClient.api.getAlarms(request).enqueue(object : Callback<BaseListResponse<Alarm>> {
             override fun onResponse(call: Call<BaseListResponse<Alarm>>, response: Response<BaseListResponse<Alarm>>) {
                 if (response.isSuccessful && response.body()?.code == 200) {

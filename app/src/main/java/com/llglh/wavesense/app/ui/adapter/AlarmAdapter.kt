@@ -1,11 +1,13 @@
 package com.llglh.wavesense.app.ui.adapter
 
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.llglh.wavesense.databinding.ItemAlarmBinding
 import com.llglh.wavesense.app.network.Alarm
+import com.llglh.wavesense.app.ui.activity.AlarmHistoryDetailActivity
 
 class AlarmAdapter(private var list: List<Alarm>) : RecyclerView.Adapter<AlarmAdapter.ViewHolder>() {
 
@@ -24,13 +26,26 @@ class AlarmAdapter(private var list: List<Alarm>) : RecyclerView.Adapter<AlarmAd
             tvTime.text = item.time
 
             // 根据类型显示不同颜色或标题
-            if (item.type == "fall") {
+            val displayType = if (item.type == "fall") {
                 tvTitle.text = "⚠️ 跌倒报警"
                 tvTitle.setTextColor(Color.RED)
-                // ivIcon.setImageResource(R.drawable.ic_fall) // 如果你有图标的话
+                "跌倒报警"
             } else {
                 tvTitle.text = "💓 体征异常"
                 tvTitle.setTextColor(Color.parseColor("#FF9800")) // 橙色
+                "体征异常"
+            }
+
+            // 点击事件：跳转到详情页
+            root.setOnClickListener {
+                val context = it.context
+                val intent = Intent(context, AlarmHistoryDetailActivity::class.java).apply {
+                    putExtra("EXTRA_TYPE", displayType)
+                    putExtra("EXTRA_DESC", item.description)
+                    putExtra("EXTRA_TIME", item.time)
+                    putExtra("EXTRA_LEVEL", item.level)
+                }
+                context.startActivity(intent)
             }
         }
     }

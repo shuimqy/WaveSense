@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
     // ⚠️⚠️⚠️ 必改：把下面的 IP 换成你云服务器的公网 IP ⚠️⚠️⚠️
     // 格式必须是：http://x.x.x.x:5000/  (最后要有斜杠)
-    private const val BASE_URL = "http://124.222.238.77:5000/"
+    private const val BASE_URL = "http://124.222.238.77:5050/"
 
     private val okHttpClient by lazy {
         OkHttpClient.Builder()

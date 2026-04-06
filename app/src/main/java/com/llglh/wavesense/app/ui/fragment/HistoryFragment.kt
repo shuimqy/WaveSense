@@ -79,9 +79,11 @@ class HistoryFragment : Fragment() {
         handler.removeCallbacks(refreshTask)
     }
 
-    // 修改 fetchAlarms，增加一个参数来区分是“手动打开”还是“自动静默刷新”
+    // 修改 fetchAlarms，增加一个参数来区分是”手动打开”还是”自动静默刷新”
     private fun fetchAlarms(isAutoRefresh: Boolean) {
-        val request = mapOf("user_id" to "1")
+        val userId = requireContext().getSharedPreferences("user_info", android.content.Context.MODE_PRIVATE)
+            .getInt("user_id", 1)
+        val request = mapOf("user_id" to userId.toString())
 
         RetrofitClient.api.getAlarms(request).enqueue(object : Callback<BaseListResponse<Alarm>> {
             override fun onResponse(

@@ -65,7 +65,9 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun fetchSettingsFromCloud() {
-        val request = mapOf("user_id" to "1")
+        val userId = getSharedPreferences("user_info", MODE_PRIVATE)
+            .getInt("user_id", 1)
+        val request = mapOf("user_id" to userId.toString())
         RetrofitClient.api.getSettings(request).enqueue(object : Callback<SettingsResponse> {
             override fun onResponse(call: Call<SettingsResponse>, response: Response<SettingsResponse>) {
                 if (response.isSuccessful && response.body()?.code == 200) {
@@ -95,8 +97,10 @@ class SettingsActivity : AppCompatActivity() {
         saveToLocal(duration, isVibrate, currentRingtoneUri)
 
         // 2. 构造请求对象 (使用 UpdateSettingsRequest 替代 Map)
+        val userId = getSharedPreferences("user_info", MODE_PRIVATE)
+            .getInt("user_id", 1)
         val request = UpdateSettingsRequest(
-            user_id = 1,
+            user_id = userId,
             alarm_duration = duration,
             is_vibrate = if (isVibrate) 1 else 0,
             ringtone_uri = currentRingtoneUri

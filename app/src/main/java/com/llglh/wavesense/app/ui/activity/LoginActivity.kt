@@ -93,9 +93,10 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful && result != null && result.code == 200) {
                     Toasty.success(this@LoginActivity, "云端登录成功！").show()
 
-                    // 保存数据 (保持不变)
+                    // 保存数据 (包括 user_id)
                     getSharedPreferences("user_info", MODE_PRIVATE).edit {
                         putBoolean("is_login", true)
+                        putInt("user_id", result.data?.id ?: 1)
                         putString("username", result.data?.username)
                         putString("role", result.data?.role)
                     }
