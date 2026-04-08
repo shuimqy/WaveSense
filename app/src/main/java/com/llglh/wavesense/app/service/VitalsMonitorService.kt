@@ -4,6 +4,8 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Build
 import android.os.IBinder
 import android.os.VibrationEffect
@@ -12,6 +14,7 @@ import android.os.VibratorManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.llglh.wavesense.R
+import com.llglh.wavesense.app.ui.activity.AlarmDetailActivity
 import com.llglh.wavesense.app.ui.activity.MainActivity
 import okhttp3.*
 import org.json.JSONObject
@@ -25,10 +28,8 @@ class VitalsMonitorService : Service() {
         .build()
 
     private val CHANNEL_ID_SILENT = "silent_monitor_channel"
-    private val CHANNEL_ID_ALERT = "high_alert_channel"
 
     private val FOREGROUND_NOTIFICATION_ID = 1001
-    private val ALERT_NOTIFICATION_ID = 1002
 
     override fun onCreate() {
         super.onCreate()
@@ -91,18 +92,9 @@ class VitalsMonitorService : Service() {
     private fun createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
             val silentChannel = NotificationChannel(CHANNEL_ID_SILENT, "后台运行状态", NotificationManager.IMPORTANCE_LOW)
             silentChannel.description = "维持 App 在后台运行"
-
-            val alertChannel = NotificationChannel(CHANNEL_ID_ALERT, "紧急健康预警", NotificationManager.IMPORTANCE_HIGH)
-            alertChannel.description = "当体征异常时触发全局通知"
-            alertChannel.enableLights(true)
-            alertChannel.lightColor = Color.RED
-            alertChannel.enableVibration(true)
-            alertChannel.vibrationPattern = longArrayOf(0, 500, 200, 500)
-
-            notificationManager.createNotificationChannels(listOf(silentChannel, alertChannel))
+            notificationManager.createNotificationChannel(silentChannel)
         }
     }
 
@@ -124,25 +116,70 @@ class VitalsMonitorService : Service() {
     }
 
     private fun triggerHighAlert(warningMessage: String) {
-        val pendingIntent = Intent(this, MainActivity::class.java).let {
-            PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_IMMUTABLE)
+        // 读取用户在 SettingsActivity 中保存的铃声和震动配置
+        val prefs = getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        val ringtoneStr = prefs.getString("pref_ringtone", "")
+        val isVibrate = prefs.getBoolean("pref_vibrate", true)
+
+        val soundUri: Uri = if (ringtoneStr.isNullOrEmpty()) {
+            android.provider.Settings.System.DEFAULT_ALARM_ALERT_URI
+        } else {
+            Uri.parse(ringtoneStr)
         }
 
-        val alertNotification = NotificationCompat.Builder(this, CHANNEL_ID_ALERT)
+        // 用铃声 URI 哈希作为 Channel ID，确保换铃声时能生效（Channel 创建后声音不可改）
+        val dynamicChannelId = "wave_alert_${soundUri.toString().hashCode()}"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            if (manager.getNotificationChannel(dynamicChannelId) == null) {
+                val channel = NotificationChannel(dynamicChannelId, "紧急健康预警", NotificationManager.IMPORTANCE_HIGH).apply {
+                    description = "当体征异常时触发全局通知"
+                    enableLights(true)
+                    lightColor = Color.RED
+                    enableVibration(isVibrate)
+                    if (isVibrate) vibrationPattern = longArrayOf(0, 500, 200, 500)
+                    val audioAttr = AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .build()
+                    setSound(soundUri, audioAttr)
+                }
+                manager.createNotificationChannel(channel)
+            }
+        }
+
+        // 点击通知跳转到 AlarmDetailActivity
+        val notifyId = System.currentTimeMillis().toInt()
+        val detailIntent = Intent(this, AlarmDetailActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            putExtra("EXTRA_TYPE", "生命体征异常")
+            putExtra("EXTRA_DESC", warningMessage)
+            putExtra("EXTRA_TIME", java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault()).format(java.util.Date()))
+            putExtra("EXTRA_NOTIFY_ID", notifyId)
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            this, notifyId, detailIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val alertNotification = NotificationCompat.Builder(this, dynamicChannelId)
             .setContentTitle("🚨 紧急预警！")
             .setContentText(warningMessage)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setColor(Color.RED)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
-            .setFullScreenIntent(pendingIntent, true)
+            .setSound(soundUri)
+            .setVibrate(if (isVibrate) longArrayOf(0, 500, 200, 500) else longArrayOf(0))
+            .setContentIntent(pendingIntent)
+            .setFullScreenIntent(pendingIntent, true)   // 锁屏/前台时弹出全屏覆盖
             .setAutoCancel(true)
             .build()
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(ALERT_NOTIFICATION_ID, alertNotification)
+        manager.notify(notifyId, alertNotification)
 
-        triggerVibration()
+        if (isVibrate) triggerVibration()
     }
 
     private fun triggerVibration() {

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 告警弹出页 - 对齐 iOS 风格：白底 + 红色主题 + 圆角卡片 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,51 +7,60 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="32dp"
-    android:background="#FFEBEE">
+    android:background="@color/bg_surface">
 
+    <!-- 图标 -->
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:src="@android:drawable/stat_notify_error"
-        android:layout_marginBottom="24dp"
-        app:tint="#D32F2F" />
+        android:layout_marginBottom="20dp"
+        app:tint="@color/heart_rate_dark" />
 
+    <!-- 标题 -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="检测到异常！"
-        android:textSize="28sp"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="#D32F2F"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="@color/heart_rate_dark"
+        android:layout_marginBottom="16dp" />
 
+    <!-- 时间 -->
     <TextView
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="时间: 2023-10-01 12:00:00"
-        android:textSize="16sp"
-        android:textColor="#333333"
-        android:layout_marginBottom="8dp"/>
+        android:textSize="15sp"
+        android:textColor="@color/text_secondary"
+        android:layout_marginBottom="8dp" />
 
+    <!-- 描述 -->
     <TextView
         android:id="@+id/tvDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="检测到心率过高，请立即检查！"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:gravity="center"
-        android:textColor="#333333"
-        android:layout_marginBottom="48dp"/>
+        android:textColor="@color/text_primary"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginBottom="48dp" />
 
-    <Button
+    <!-- 确认按钮 -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnConfirm"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="56dp"
         android:text="确认并停止警报"
-        android:textSize="20sp"
-        android:backgroundTint="#D32F2F"
-        android:textColor="#FFFFFF"/>
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:backgroundTint="@color/heart_rate_dark"
+        app:cornerRadius="14dp"
+        app:elevation="4dp" />
 
 </LinearLayout>

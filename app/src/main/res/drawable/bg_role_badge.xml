@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 角色徽章背景：浅蓝Capsule - 用于 Profile 页用户角色标签 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/primary_bg" />
+    <corners android:radius="100dp" />
+</shape>

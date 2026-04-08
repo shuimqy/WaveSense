@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 状态徽章 - 警告橙色：圆角Capsule -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#1AE65100" />
+    <corners android:radius="100dp" />
+</shape>

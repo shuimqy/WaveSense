@@ -8,10 +8,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.EditText
-import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.textfield.TextInputEditText
 import com.llglh.wavesense.R
 import com.llglh.wavesense.app.network.RetrofitClient
 import com.llglh.wavesense.app.network.SettingsResponse
@@ -23,8 +23,8 @@ import retrofit2.Response
 
 class SettingsActivity : AppCompatActivity() {
 
-    private lateinit var etDuration: EditText
-    private lateinit var switchVibrate: Switch
+    private lateinit var etDuration: TextInputEditText
+    private lateinit var switchVibrate: SwitchMaterial
     private lateinit var tvRingtoneName: TextView
     private var currentRingtoneUri: String = ""
 
@@ -65,8 +65,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun fetchSettingsFromCloud() {
-        val userId = getSharedPreferences("user_info", MODE_PRIVATE)
-            .getInt("user_id", 1)
+        val userId = getSharedPreferences("user_info", MODE_PRIVATE).getInt("user_id", 1)
         val request = mapOf("user_id" to userId.toString())
         RetrofitClient.api.getSettings(request).enqueue(object : Callback<SettingsResponse> {
             override fun onResponse(call: Call<SettingsResponse>, response: Response<SettingsResponse>) {
@@ -80,7 +79,7 @@ class SettingsActivity : AppCompatActivity() {
                     }
                 }
             }
-            override fun onFailure(call: Call<SettingsResponse>, t: Throwable) { }
+            override fun onFailure(call: Call<SettingsResponse>, t: Throwable) {}
         })
     }
 
@@ -93,12 +92,9 @@ class SettingsActivity : AppCompatActivity() {
         val duration = durationStr.toInt()
         val isVibrate = switchVibrate.isChecked
 
-        // 1. 本地保存
         saveToLocal(duration, isVibrate, currentRingtoneUri)
 
-        // 2. 构造请求对象 (使用 UpdateSettingsRequest 替代 Map)
-        val userId = getSharedPreferences("user_info", MODE_PRIVATE)
-            .getInt("user_id", 1)
+        val userId = getSharedPreferences("user_info", MODE_PRIVATE).getInt("user_id", 1)
         val request = UpdateSettingsRequest(
             user_id = userId,
             alarm_duration = duration,
@@ -106,21 +102,14 @@ class SettingsActivity : AppCompatActivity() {
             ringtone_uri = currentRingtoneUri
         )
 
-        // 3. 发送请求
         RetrofitClient.api.updateSettings(request).enqueue(object : Callback<SettingsResponse> {
             override fun onResponse(call: Call<SettingsResponse>, response: Response<SettingsResponse>) {
                 if (response.isSuccessful && response.body()?.code == 200) {
                     Toasty.success(this@SettingsActivity, "设置已保存").show()
                     finish()
                 } else {
-                    // 🔥 关键修改：提取真实的错误原因！
-                    val errorMsg = if (response.body() != null) {
-                        response.body()?.msg // 如果是 200 但 code!=200
-                    } else {
-                        // 如果是 500/404，从 errorBody 读取原生报错
-                        response.errorBody()?.string() ?: "服务器内部错误 (${response.code()})"
-                    }
-                    Log.e("SettingsActivity", "保存失败: $errorMsg") // 在 Logcat 打印
+                    val errorMsg = response.body()?.msg ?: response.errorBody()?.string() ?: "服务器错误 (${response.code()})"
+                    Log.e("SettingsActivity", "保存失败: $errorMsg")
                     Toasty.error(this@SettingsActivity, "保存失败: $errorMsg").show()
                 }
             }
@@ -132,8 +121,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun saveToLocal(duration: Int, isVibrate: Boolean, ringtone: String) {
-        val prefs = getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-        prefs.edit().apply {
+        getSharedPreferences("app_settings", Context.MODE_PRIVATE).edit().apply {
             putInt("pref_duration", duration)
             putBoolean("pref_vibrate", isVibrate)
             putString("pref_ringtone", ringtone)
@@ -155,8 +143,7 @@ class SettingsActivity : AppCompatActivity() {
             tvRingtoneName.text = "当前: 默认铃声"
         } else {
             val ringtone = RingtoneManager.getRingtone(this, Uri.parse(uriStr))
-            val name = ringtone?.getTitle(this) ?: "未知铃声"
-            tvRingtoneName.text = "当前: $name"
+            tvRingtoneName.text = "当前: ${ringtone?.getTitle(this) ?: "未知铃声"}"
         }
     }
 }

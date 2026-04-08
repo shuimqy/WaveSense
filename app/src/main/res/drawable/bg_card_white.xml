@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- iOS 风格白色卡片背景：圆角16dp + 轻阴影 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="1dp"
+        android:right="1dp"
+        android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#14000000" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+    <item android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/bg_card" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Splash 页 - 对齐 iOS SplashView：深蓝渐变背景 + 居中 Logo + 标题 + 副标题 + 底部学校信息 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,46 +7,103 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
+    android:background="@drawable/bg_splash_gradient"
     tools:context=".app.ui.activity.SplashActivity">
 
-
+    <!-- 右上角倒计时 -->
     <TextView
         android:id="@+id/timeTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="16dp"
-        android:textSize="32sp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
         android:text="5"
+        android:textSize="22sp"
         android:textStyle="bold"
-        />
+        android:textColor="#BFFFFFFF" />
+
+    <!-- 上方弹性空间 -->
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.4"/>
+        android:layout_weight="1" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:lottie_fileName="lottie/wave.json"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
+    <!-- Logo 区域：半透明圆形背景 + Lottie 动画 -->
+    <FrameLayout
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center_horizontal">
 
-        />
+        <View
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:background="@drawable/bg_splash_logo_circle" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            app:lottie_fileName="lottie/wave.json"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
+
+    </FrameLayout>
+
+    <!-- 标题 -->
     <TextView
         android:id="@+id/titleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="28dp"
         android:text="@string/app_name"
-        android:layout_marginTop="30dp"
         android:textSize="30sp"
         android:textStyle="bold"
-        />
+        android:textColor="@color/white"
+        android:letterSpacing="0.02" />
 
+    <!-- 副标题 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="mmWave Healthcare · Android"
+        android:textSize="15sp"
+        android:textColor="#BFFFFFFF"
+        android:letterSpacing="0.03" />
+
+    <!-- 下方弹性空间 -->
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.2"/>
+        android:layout_weight="1.5" />
+
+    <!-- 底部学校信息 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="56dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="西安电子科技大学 · 计算机科学与技术学院"
+            android:textSize="12sp"
+            android:textColor="#8DFFFFFF" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="毕业设计 · 2026届"
+            android:textSize="11sp"
+            android:textColor="#66FFFFFF" />
+
+    </LinearLayout>
+
 </LinearLayout>

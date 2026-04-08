@@ -12,11 +12,10 @@ data class Settings(
 data class SettingsResponse(
     val code: Int,
     val msg: String,
-    val data: Settings? // ⚠️ 必须带问号，因为保存成功时 data 可能是 null
+    val data: Settings?
 )
 
-// 3. ✅ 新增：更新设置的请求类 (发送数据用)
-// 只有用这个类替代 Map，才能彻底解决闪退！
+// 3. 更新设置的请求类 (发送数据用)
 data class UpdateSettingsRequest(
     val user_id: Int,
     val alarm_duration: Int,

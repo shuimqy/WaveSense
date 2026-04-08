@@ -3,10 +3,60 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <!-- iOS 风格主色 - 蓝色系 -->
+    <color name="primary">#FF1976D2</color>
+    <color name="primary_dark">#FF1565C0</color>
+    <color name="primary_darker">#FF0A3D8F</color>
+    <color name="primary_light">#FFDBEAFE</color>
+    <color name="primary_bg">#FFE3F2FD</color>
+    <color name="primary_bg_light">#FFEFF6FF</color>
 
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <!-- 心率 - 红色系 -->
+    <color name="heart_rate">#FFE53935</color>
+    <color name="heart_rate_dark">#FFD32F2F</color>
+    <color name="heart_rate_bg">#1AE53935</color>
+
+    <!-- 呼吸率 - 蓝色 -->
+    <color name="breathing_rate">#FF1976D2</color>
+    <color name="breathing_rate_bg">#1A1976D2</color>
+
+    <!-- 状态色 -->
+    <color name="status_normal">#FF2E7D32</color>
+    <color name="status_normal_bg">#FFE8F5E9</color>
+    <color name="status_normal_border">#FFC8E6C9</color>
+    <color name="status_warning">#FFE65100</color>
+    <color name="status_critical">#FFD32F2F</color>
+    <color name="status_connecting">#FFF57C00</color>
+
+    <!-- 背景色 -->
+    <color name="bg_page">#FFEFF6FF</color>
+    <color name="bg_page_end">#FFF0FDF4</color>
+    <color name="bg_card">#FFFFFFFF</color>
+    <color name="bg_secondary">#FFF5F5F5</color>
+    <color name="bg_surface">#FFF8F9FA</color>
+
+    <!-- 文字色 -->
+    <color name="text_primary">#FF212121</color>
+    <color name="text_secondary">#FF757575</color>
+    <color name="text_hint">#FF9E9E9E</color>
+    <color name="text_white">#FFFFFFFF</color>
+
+    <!-- 分隔线 -->
+    <color name="divider">#FFEEEEEE</color>
+    <color name="border_light">#FFBBDEFB</color>
+
+    <!-- 退出登录 - 红色 -->
+    <color name="logout_red">#FFFF5252</color>
+    <color name="logout_red_dark">#FFC62828</color>
+
+    <!-- 守护者模式 - 蓝色背景 -->
+    <color name="guardian_bg">#FFE3F2FD</color>
+    <color name="guardian_title">#FF0D47A1</color>
+
+    <!-- 被监护者模式 - 绿色 -->
+    <color name="monitored_bg">#FFE8F5E9</color>
+    <color name="monitored_title">#FF1B5E20</color>
+
+    <!-- 兼容旧代码引用 -->
+    <color name="teal_200">@color/heart_rate</color>
 </resources>

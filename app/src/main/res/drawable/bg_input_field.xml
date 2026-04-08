@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- iOS 风格输入框背景：白色 + 圆角12dp + 浅灰边框 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/bg_card" />
+    <corners android:radius="12dp" />
+    <stroke
+        android:width="1.5dp"
+        android:color="#38999999" />
+</shape>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- iOS 风格主按钮背景：蓝色渐变 + 圆角14dp -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#FF1565C0"
+                android:endColor="#CC1565C0"
+                android:angle="0" />
+            <corners android:radius="14dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#FF1976D2"
+                android:endColor="#D91976D2"
+                android:angle="0" />
+            <corners android:radius="14dp" />
+        </shape>
+    </item>
+</selector>

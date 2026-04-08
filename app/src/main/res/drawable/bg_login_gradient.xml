@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- iOS 风格登录页背景渐变：#EFF6FF → #FFFFFF → #F0FDF4 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="#FFEFF6FF"
+        android:centerColor="#FFFFFFFF"
+        android:endColor="#FFF0FDF4"
+        android:angle="135"
+        android:type="linear" />
+</shape>

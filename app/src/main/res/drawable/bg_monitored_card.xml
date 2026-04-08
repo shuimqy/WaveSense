@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 被监护者模式信息卡背景：浅绿 + 绿色边框 + 圆角14dp -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/monitored_bg" />
+    <corners android:radius="14dp" />
+    <stroke
+        android:width="1dp"
+        android:color="@color/status_normal_border" />
+</shape>

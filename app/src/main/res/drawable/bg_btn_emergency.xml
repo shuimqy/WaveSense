@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 紧急呼叫按钮背景：红色渐变 + 圆角14dp -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#FFC62828"
+                android:endColor="#FFB71C1C"
+                android:angle="0" />
+            <corners android:radius="14dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#FFC62828"
+                android:endColor="#FFD32F2F"
+                android:angle="0" />
+            <corners android:radius="14dp" />
+        </shape>
+    </item>
+</selector>

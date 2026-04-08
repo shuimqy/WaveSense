@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- iOS 风格 Splash 渐变背景：深蓝 #0A3D8F → #1565C0 → #1976D2 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="#FF0A3D8F"
+        android:centerColor="#FF1565C0"
+        android:endColor="#FF1976D2"
+        android:angle="135"
+        android:type="linear" />
+</shape>

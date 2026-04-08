@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 历史页 - 对齐 iOS HistoryView：iOS 蓝色顶栏 + 白色列表 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@color/bg_surface">
+
+    <!-- 顶部标题栏：iOS 蓝色渐变 -->
+    <View
+        android:id="@+id/toolbarBg"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_toolbar_blue"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/design_default_color_primary"
         android:gravity="center_vertical"
         android:paddingStart="20dp"
         android:text="历史警报记录"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- 历史列表 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

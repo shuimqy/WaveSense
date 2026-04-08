@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Logo 圆形背景 - 浅蓝色（iOS Login 页的 #DBEAFE） -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#FFDBEAFE" />
+</shape>

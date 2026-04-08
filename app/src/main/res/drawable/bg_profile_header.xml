@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Profile 页头部背景：iOS 蓝色渐变 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="@color/primary_darker"
+        android:centerColor="@color/primary_dark"
+        android:endColor="@color/primary"
+        android:angle="135" />
+</shape>

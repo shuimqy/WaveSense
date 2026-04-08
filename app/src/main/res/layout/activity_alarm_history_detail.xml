@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 历史警报详情页 - 对齐 iOS HistoryView 风格：蓝色顶栏 + 白色卡片 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@color/bg_surface">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- 顶部工具栏 -->
+        <!-- 顶部工具栏：iOS 蓝色 -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="#FFFFFF"
+            android:background="@drawable/bg_toolbar_blue"
             android:elevation="4dp">
 
             <ImageButton
@@ -24,6 +25,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_menu_revert"
                 android:contentDescription="返回"
+                app:tint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="警报详情"
-                android:textColor="#333333"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -42,46 +44,47 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- 警报类型卡片 -->
+        <!-- 告警类型卡片 -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@color/bg_card">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp"
+                android:padding="24dp"
                 android:gravity="center">
 
                 <ImageView
                     android:id="@+id/ivAlarmIcon"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
                     android:src="@android:drawable/stat_notify_error"
-                    android:layout_marginBottom="16dp"
-                    app:tint="#D32F2F" />
+                    android:layout_marginBottom="14dp"
+                    app:tint="@color/heart_rate_dark" />
 
                 <TextView
                     android:id="@+id/tvAlarmType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="⚠️ 跌倒报警"
-                    android:textSize="24sp"
+                    android:text="心率异常警告"
+                    android:textSize="22sp"
                     android:textStyle="bold"
-                    android:textColor="#D32F2F"
-                    android:layout_marginBottom="8dp"/>
+                    android:textColor="@color/heart_rate_dark"
+                    android:layout_marginBottom="8dp" />
 
                 <TextView
                     android:id="@+id/tvAlarmTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2026-01-22 10:00:00"
-                    android:textSize="14sp"
-                    android:textColor="#666666"/>
+                    android:textSize="13sp"
+                    android:textColor="@color/text_secondary" />
 
             </LinearLayout>
 
@@ -92,9 +95,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp">
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@color/bg_card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -106,19 +110,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="详细描述"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
-                    android:textColor="#333333"
-                    android:layout_marginBottom="12dp"/>
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="10dp" />
 
                 <TextView
                     android:id="@+id/tvAlarmDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="检测到用户可能发生跌倒，请立即查看情况"
-                    android:textSize="15sp"
-                    android:textColor="#666666"
-                    android:lineSpacingExtra="4dp"/>
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:lineSpacingExtra="4dp" />
 
             </LinearLayout>
 
@@ -129,9 +133,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp">
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@color/bg_card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,10 +148,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="警报级别"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
-                    android:textColor="#333333"
-                    android:layout_marginBottom="12dp"/>
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="10dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -154,17 +159,18 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
+                    <!-- 级别徽章 -->
                     <TextView
                         android:id="@+id/tvAlarmLevel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="严重"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="#D32F2F"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="6dp"
-                        android:background="@android:drawable/dialog_holo_light_frame"/>
+                        android:textColor="@color/heart_rate_dark"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="5dp"
+                        android:background="@drawable/bg_badge_critical" />
 
                     <TextView
                         android:id="@+id/tvLevelDesc"
@@ -173,8 +179,8 @@
                         android:layout_weight="1"
                         android:layout_marginStart="12dp"
                         android:text="需要立即处理"
-                        android:textSize="14sp"
-                        android:textColor="#999999"/>
+                        android:textSize="13sp"
+                        android:textColor="@color/text_secondary" />
 
                 </LinearLayout>
 
@@ -182,16 +188,19 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- 底部按钮 -->
-        <Button
+        <!-- 关闭按钮 -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnClose"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="54dp"
             android:layout_margin="16dp"
             android:text="关闭"
             android:textSize="16sp"
-            android:backgroundTint="#2196F3"
-            android:textColor="#FFFFFF"/>
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/primary"
+            app:cornerRadius="14dp"
+            app:elevation="4dp" />
 
     </LinearLayout>
 

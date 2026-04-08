@@ -112,11 +112,11 @@ class MonitorFragment : Fragment() {
         binding.tvHeartRate.text = bpmStr
 
         if (bpmVal > 120) {
-            binding.tvStatus.text = "● 异常！已触发系统报警"
-            binding.tvStatus.setTextColor(Color.RED)
+            binding.tvStatus.text = "● 设备运行正常"
+            binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.status_normal))
         } else {
             binding.tvStatus.text = "● 设备运行正常"
-            binding.tvStatus.setTextColor(Color.parseColor("#4CAF50"))
+            binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.status_normal))
         }
 
         val data = binding.ecgChart.data
